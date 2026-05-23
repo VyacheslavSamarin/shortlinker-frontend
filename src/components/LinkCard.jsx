@@ -53,7 +53,10 @@ function LinkCard({
   async function handleDownloadQR() {
     if (!alias) return
     try {
-      const res = await fetch(getQRCodeSrc(alias))
+      const res = await fetch(getQRCodeSrc(alias, {
+        fg: item.qr_fg ? `#${item.qr_fg}` : "#000000",
+        bg: item.qr_bg ? `#${item.qr_bg}` : "#ffffff",
+      }))
       const blob = await res.blob()
       const url = URL.createObjectURL(blob)
       const a = document.createElement("a")
