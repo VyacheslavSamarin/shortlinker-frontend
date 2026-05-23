@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import "./AppHeader.css"
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8082"
+
 function AppHeader({
   center,
   userLabel = "Username",
@@ -41,14 +43,25 @@ function AppHeader({
 
   return (
     <header className="app-header">
-      <button
-        type="button"
-        className="app-header__logo-btn"
-        onClick={handleLogoClick}
-        aria-label="ShortLinker — на главную"
-      >
-        <span className="app-header__logo-text">ShortLinker</span>
-      </button>
+      <div className="app-header__left">
+        <button
+          type="button"
+          className="app-header__logo-btn"
+          onClick={handleLogoClick}
+          aria-label="ShortLinker — на главную"
+        >
+          <span className="app-header__logo-text">ShortLinker</span>
+        </button>
+        <a
+          href={`${API_URL}/swagger/`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="app-header__api-badge"
+          title="Открыть Swagger UI"
+        >
+          API
+        </a>
+      </div>
 
       {center && <div className="app-header__center">{center}</div>}
 
