@@ -116,7 +116,10 @@ function LinkCard({
                 aria-label="Изменить alias"
                 title="Изменить alias"
               >
-                ✏️
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <path d="M3 6h9M3 6l2.5-2.5M3 6l2.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M15 12H6M15 12l-2.5-2.5M15 12l-2.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </button>
             )}
             {showQrSettings && (
