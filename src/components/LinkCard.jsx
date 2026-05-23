@@ -11,9 +11,11 @@ function LinkCard({
   activeQR,
   onToggleQR,
   onDelete,
+  onEditAlias,
   showAnalytics = false,
   showQrPopup = false,
   showQrSettings = true,
+  showAliasEdit = false,
 }) {
   const showAside = showAnalytics || showQrPopup
   const navigate = useNavigate()
@@ -106,6 +108,17 @@ function LinkCard({
             >
               {copied ? "Скопировано!" : "Копировать"}
             </button>
+            {showAliasEdit && alias && onEditAlias && (
+              <button
+                type="button"
+                className="btn btn--icon"
+                onClick={() => onEditAlias(item)}
+                aria-label="Изменить alias"
+                title="Изменить alias"
+              >
+                ✏️
+              </button>
+            )}
             {showQrSettings && (
               <button
                 type="button"

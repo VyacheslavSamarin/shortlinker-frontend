@@ -4,6 +4,7 @@ import "./home_lk.css"
 import AppHeader from "../components/AppHeader"
 import LinkCard from "../components/LinkCard"
 import SettingsSidebar from "../components/SettingsSidebar"
+import AliasModal from "../components/AliasModal"
 import { shortenUrl, getUserUrls, deleteUrl, logoutApi, getUser } from "../api"
 import { useNavigate, useLocation } from "react-router-dom"
 
@@ -17,6 +18,7 @@ function Home_lk() {
   const [error, setError] = useState("")
   const [fetchingLinks, setFetchingLinks] = useState(true)
   const [showStatsModal, setShowStatsModal] = useState(false)
+  const [aliasModalItem, setAliasModalItem] = useState(null)
   const inputRef = useRef(null)
   const navigate = useNavigate()
   const location = useLocation()
@@ -47,7 +49,6 @@ function Home_lk() {
     const params = new URLSearchParams(location.search)
     if (params.get("stats") === "1") {
       setShowStatsModal(true)
-      // Убираем параметр из URL без перезагрузки
       navigate("/home_lk", { replace: true })
     }
   }, [location.search, navigate])
@@ -82,14 +83,13 @@ function Home_lk() {
     setLinks((prev) =>
       prev.map((l) => {
         if (l.alias !== oldAlias) return l
-        const baseUrl = l.short_url
-          ? l.short_url.replace(oldAlias, newAlias)
+        const newShortUrl = l.short_url
+          ? l.short_url.replace(`/${oldAlias}`, `/${newAlias}`)
           : l.short_url
-        return { ...l, alias: newAlias, short_url: baseUrl, id: newAlias }
+        return { ...l, alias: newAlias, short_url: newShortUrl, id: newAlias }
       })
     )
-    setSelectedItem(null)
-    setSidebar(null)
+    setAliasModalItem(null)
   }
 
   async function handleDelete(alias) {
@@ -172,7 +172,9 @@ function Home_lk() {
                 activeQR={activeQR}
                 onToggleQR={toggleQR}
                 onDelete={handleDelete}
+                onEditAlias={setAliasModalItem}
                 showQrPopup
+                showAliasEdit
               />
             ))
           )}
@@ -184,7 +186,12 @@ function Home_lk() {
         onClose={() => { setSidebar(null); setSelectedItem(null) }}
         item={selectedItem}
         onQRColorsSaved={handleQRColorsSaved}
-        onAliasSaved={handleAliasSaved}
+      />
+
+      <AliasModal
+        item={aliasModalItem}
+        onClose={() => setAliasModalItem(null)}
+        onSaved={handleAliasSaved}
       />
 
       {/* Модальное окно выбора ссылки для статистики */}

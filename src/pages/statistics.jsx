@@ -6,6 +6,7 @@ import "./home_lk.css"
 import AppHeader from "../components/AppHeader"
 import LinkCard from "../components/LinkCard"
 import SettingsSidebar from "../components/SettingsSidebar"
+import AliasModal from "../components/AliasModal"
 import { getStats, getUserUrls, logoutApi, getUser } from "../api"
 
 function Statistics() {
@@ -18,6 +19,7 @@ function Statistics() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [showStatsModal, setShowStatsModal] = useState(false)
+  const [aliasModalItem, setAliasModalItem] = useState(null)
   const navigate = useNavigate()
   const { alias } = useParams()
 
@@ -63,6 +65,12 @@ function Statistics() {
 
   function handleViewStats() {
     setShowStatsModal(true)
+  }
+
+  function handleAliasSaved(oldAlias, newAlias) {
+    setAliasModalItem(null)
+    // Редиректим на страницу статистики с новым alias
+    navigate(`/statistics/${newAlias}`, { replace: true })
   }
 
   // Агрегируем статистику по странам
@@ -139,7 +147,9 @@ function Statistics() {
               }}
               activeQR={activeQR}
               onToggleQR={toggleQR}
+              onEditAlias={setAliasModalItem}
               showQrPopup
+              showAliasEdit
             />
 
             <div className="stats-summary">
@@ -230,12 +240,12 @@ function Statistics() {
             setLinkInfo((prev) => ({ ...prev, qr_fg: fg, qr_bg: bg }))
           }
         }}
-        onAliasSaved={(oldAlias, newAlias) => {
-          setSidebar(null)
-          setSelectedItem(null)
-          // Редиректим на страницу статистики с новым alias
-          navigate(`/statistics/${newAlias}`, { replace: true })
-        }}
+      />
+
+      <AliasModal
+        item={aliasModalItem}
+        onClose={() => setAliasModalItem(null)}
+        onSaved={handleAliasSaved}
       />
 
       {/* Модальное окно выбора ссылки для статистики */}
