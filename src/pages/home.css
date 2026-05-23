@@ -68,6 +68,105 @@
   overflow-y: auto;
 }
 
+/* Состояния загрузки и ошибок */
+.error-message {
+  padding: var(--space-3) var(--space-4);
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-md);
+  color: #dc2626;
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-4);
+}
+
+.loading-message,
+.empty-message {
+  padding: var(--space-6);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.stats-summary {
+  padding: var(--space-3) 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.stats-summary__total strong {
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Кнопка удаления */
+.btn--danger {
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+.btn--danger:hover {
+  background: #fef2f2;
+  border-color: #dc2626;
+}
+
+/* Disabled state */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.shortener input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Ссылка в карточке */
+.link-card__short a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.link-card__short a:hover {
+  text-decoration: underline;
+  color: var(--color-accent);
+}
+
+/* Активная кнопка формата QR */
+.qr-popup__actions button.active {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
+}
+
+/* QR preview в попапе */
+.qr-popup__preview {
+  margin-bottom: var(--space-3);
+  display: flex;
+  justify-content: center;
+}
+
+.qr-popup__preview img {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+/* Кнопка "Все ссылки" в хедере */
+.all-links-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.all-links-link:hover {
+  color: var(--color-text);
+}
+
 /* Buttons */
 .btn {
   display: inline-flex;

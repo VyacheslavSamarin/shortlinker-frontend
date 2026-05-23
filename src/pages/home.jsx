@@ -4,6 +4,7 @@ import AppHeader from "../components/AppHeader"
 import LinkCard from "../components/LinkCard"
 import SettingsSidebar from "../components/SettingsSidebar"
 import { useNavigate } from "react-router-dom"
+import { shortenUrl } from "../api"
 
 function Home() {
   const [url, setUrl] = useState("")
@@ -12,28 +13,45 @@ function Home() {
   const [activeQR, setActiveQR] = useState(null)
   const [showGuestPopup, setShowGuestPopup] = useState(false)
   const [guestPopupShown, setGuestPopupShown] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
   const navigate = useNavigate()
 
   function closeGuestPopup() {
     setShowGuestPopup(false)
   }
 
-  function handleShorten() {
+  async function handleShorten() {
     if (!url) return
 
-    const newLink = {
-      id: Date.now(),
-      original: url,
-      short: "short.ly/" + Math.random().toString(36).slice(2, 7)
-    }
+    setLoading(true)
+    setError("")
 
-    setLinks([newLink, ...links])
-    setUrl("")
+    try {
+      const result = await shortenUrl(url)
+      const newLink = {
+        id: result.alias,
+        alias: result.alias,
+        url: url,
+        short_url: result.short_url,
+        clicks: 0,
+      }
+      setLinks([newLink, ...links])
+      setUrl("")
 
-    if (!guestPopupShown) {
-      setShowGuestPopup(true)
-      setGuestPopupShown(true)
+      if (!guestPopupShown) {
+        setShowGuestPopup(true)
+        setGuestPopupShown(true)
+      }
+    } catch (err) {
+      setError(err.message || "Не удалось сократить ссылку")
+    } finally {
+      setLoading(false)
     }
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === "Enter") handleShorten()
   }
 
   function toggleQR(id) {
@@ -53,12 +71,21 @@ function Home() {
           <input
             value={url}
             onChange={(e) => setUrl(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="Вставьте ссылку для сокращения"
+            disabled={loading}
           />
-          <button type="button" className="btn btn--primary" onClick={handleShorten}>
-            Сократить
+          <button
+            type="button"
+            className="btn btn--primary"
+            onClick={handleShorten}
+            disabled={loading || !url}
+          >
+            {loading ? "Сокращаем..." : "Сократить"}
           </button>
         </div>
+
+        {error && <p className="error-message">{error}</p>}
 
         <div className="cards">
           {links.map((item) => (

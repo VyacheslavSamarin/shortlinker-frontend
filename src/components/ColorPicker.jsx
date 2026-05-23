@@ -1,8 +1,12 @@
-import { useState, useRef } from "react"
+import { useRef } from "react"
 import "./ColorPicker.css"
 
-function ColorPicker() {
-  const [color, setColor] = useState("#000000")
+/**
+ * Управляемый ColorPicker
+ * @param {string} value  — текущий hex-цвет, например "#000000"
+ * @param {function} onChange — колбэк (newHexColor: string) => void
+ */
+function ColorPicker({ value = "#000000", onChange }) {
   const inputRef = useRef(null)
 
   function openPicker() {
@@ -14,7 +18,7 @@ function ColorPicker() {
       <button
         type="button"
         className="color-picker__swatch"
-        style={{ background: color }}
+        style={{ background: value }}
         onClick={openPicker}
         aria-label="Выбрать цвет"
       />
@@ -22,8 +26,8 @@ function ColorPicker() {
         ref={inputRef}
         type="color"
         className="color-picker__input"
-        value={color}
-        onChange={(e) => setColor(e.target.value)}
+        value={value}
+        onChange={(e) => onChange?.(e.target.value)}
       />
     </div>
   )

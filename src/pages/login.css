@@ -41,6 +41,13 @@
   letter-spacing: -0.02em;
 }
 
+.auth-description {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: calc(var(--space-5) * -0.5);
+}
+
 .auth-card input {
   padding: var(--space-3) var(--space-4);
   border: 1px solid var(--color-border);
@@ -100,4 +107,27 @@
 
 .auth-footer span:hover {
   opacity: 0.7;
+}
+
+/* Сообщение об ошибке в форме авторизации */
+.auth-error {
+  padding: var(--space-3) var(--space-4);
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-md);
+  color: #dc2626;
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+/* Disabled state для кнопки */
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.auth-card input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
