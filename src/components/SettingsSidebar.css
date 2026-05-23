@@ -142,3 +142,79 @@
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
 }
+
+/* ── Секции сайдбара ── */
+.sidebar__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.sidebar__section-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.sidebar__divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: var(--space-1) 0;
+}
+
+/* ── Поле alias ── */
+.sidebar__alias-row {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-muted);
+  overflow: hidden;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.sidebar__alias-row:focus-within {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(9, 9, 11, 0.08);
+}
+
+.sidebar__alias-base {
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  user-select: none;
+  border-right: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.sidebar__alias-input {
+  flex: 1;
+  padding: var(--space-3) var(--space-4) !important;
+  border: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-size: var(--font-size-base);
+  outline: none;
+  min-width: 0;
+}
+
+.sidebar__alias-input:focus {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.sidebar__alias-preview {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  word-break: break-all;
+}
+
+.sidebar__alias-preview span {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-medium);
+}

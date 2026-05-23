@@ -225,10 +225,16 @@ function Statistics() {
         sidebar={sidebar}
         onClose={() => { setSidebar(null); setSelectedItem(null) }}
         item={selectedItem}
-        onQRColorsSaved={(alias, fg, bg) => {
-          if (linkInfo?.alias === alias) {
+        onQRColorsSaved={(updatedAlias, fg, bg) => {
+          if (linkInfo?.alias === updatedAlias) {
             setLinkInfo((prev) => ({ ...prev, qr_fg: fg, qr_bg: bg }))
           }
+        }}
+        onAliasSaved={(oldAlias, newAlias) => {
+          setSidebar(null)
+          setSelectedItem(null)
+          // Редиректим на страницу статистики с новым alias
+          navigate(`/statistics/${newAlias}`, { replace: true })
         }}
       />
 

@@ -78,6 +78,20 @@ function Home_lk() {
     )
   }
 
+  function handleAliasSaved(oldAlias, newAlias) {
+    setLinks((prev) =>
+      prev.map((l) => {
+        if (l.alias !== oldAlias) return l
+        const baseUrl = l.short_url
+          ? l.short_url.replace(oldAlias, newAlias)
+          : l.short_url
+        return { ...l, alias: newAlias, short_url: baseUrl, id: newAlias }
+      })
+    )
+    setSelectedItem(null)
+    setSidebar(null)
+  }
+
   async function handleDelete(alias) {
     try {
       await deleteUrl(alias)
@@ -170,6 +184,7 @@ function Home_lk() {
         onClose={() => { setSidebar(null); setSelectedItem(null) }}
         item={selectedItem}
         onQRColorsSaved={handleQRColorsSaved}
+        onAliasSaved={handleAliasSaved}
       />
 
       {/* Модальное окно выбора ссылки для статистики */}

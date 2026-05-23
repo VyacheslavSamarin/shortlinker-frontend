@@ -191,6 +191,20 @@ async function saveQRColors(alias, fg, bg) {
   })
 }
 
+/**
+ * Обновить alias ссылки
+ * @param {string} oldAlias — текущий alias
+ * @param {string} newAlias — новый alias
+ * @returns {{ alias: string }} — объект с новым alias
+ */
+async function updateAlias(oldAlias, newAlias) {
+  const data = await request(`/${oldAlias}/alias`, {
+    method: "PUT",
+    body: JSON.stringify({ new_alias: newAlias }),
+  })
+  return data // { status, alias }
+}
+
 // ─── Статистика ───────────────────────────────────────────────────────────────
 
 /**
@@ -225,6 +239,7 @@ export {
   getQRCodeUrl,
   getQRCodeSrc,
   saveQRColors,
+  updateAlias,
   getStats,
   getMe,
 }
