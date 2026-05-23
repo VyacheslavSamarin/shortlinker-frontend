@@ -10,6 +10,7 @@ import { getStats, getUserUrls, logoutApi, getUser } from "../api"
 
 function Statistics() {
   const [sidebar, setSidebar] = useState(null)
+  const [selectedItem, setSelectedItem] = useState(null)
   const [activeQR, setActiveQR] = useState(null)
   const [visits, setVisits] = useState([])
   const [linkInfo, setLinkInfo] = useState(null)
@@ -132,7 +133,10 @@ function Statistics() {
           <>
             <LinkCard
               item={displayLink}
-              onOpenSidebar={setSidebar}
+              onOpenSidebar={(type, linkItem) => {
+                setSelectedItem(linkItem)
+                setSidebar(type)
+              }}
               activeQR={activeQR}
               onToggleQR={toggleQR}
               showQrPopup
@@ -217,7 +221,16 @@ function Statistics() {
         )}
       </div>
 
-      <SettingsSidebar sidebar={sidebar} onClose={() => setSidebar(null)} />
+      <SettingsSidebar
+        sidebar={sidebar}
+        onClose={() => { setSidebar(null); setSelectedItem(null) }}
+        item={selectedItem}
+        onQRColorsSaved={(alias, fg, bg) => {
+          if (linkInfo?.alias === alias) {
+            setLinkInfo((prev) => ({ ...prev, qr_fg: fg, qr_bg: bg }))
+          }
+        }}
+      />
 
       {/* Модальное окно выбора ссылки для статистики */}
       {showStatsModal && (
