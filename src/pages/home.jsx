@@ -96,6 +96,7 @@ function Home() {
               activeQR={activeQR}
               onToggleQR={toggleQR}
               showQrPopup
+              showQrSettings={false}
             />
           ))}
         </div>

@@ -13,6 +13,7 @@ function LinkCard({
   onDelete,
   showAnalytics = false,
   showQrPopup = false,
+  showQrSettings = true,
 }) {
   const showAside = showAnalytics || showQrPopup
   const navigate = useNavigate()
@@ -105,14 +106,16 @@ function LinkCard({
             >
               {copied ? "Скопировано!" : "Копировать"}
             </button>
-            <button
-              type="button"
-              className="btn btn--icon"
-              onClick={() => onOpenSidebar("QRSettings", item)}
-              aria-label="Настройки QR"
-            >
-              <img src={miniqrIcon} alt="" />
-            </button>
+            {showQrSettings && (
+              <button
+                type="button"
+                className="btn btn--icon"
+                onClick={() => onOpenSidebar("QRSettings", item)}
+                aria-label="Настройки QR"
+              >
+                <img src={miniqrIcon} alt="" />
+              </button>
+            )}
             {onDelete && alias && (
               <button
                 type="button"
